@@ -37,10 +37,15 @@ class App extends Component {
   render() {
     const { filteredMonsters } = this.state;
     const { handleChange } = this;
-    console.log("render app.js", "--line40");
     return (
       <div className='App'>
-        <SearchBox handleChange={handleChange} />
+        <h1 className='app-title'>Monsters Rolodex</h1>
+
+        <SearchBox
+          handleChange={handleChange}
+          placeholder='search monster'
+          className='monster-search-box'
+        />
         <CardList filteredMonsters={filteredMonsters} />
       </div>
     );
