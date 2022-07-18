@@ -63,6 +63,8 @@ function App() {
 
   const [monsters, setMonsters] = useState([]);
 
+  const [title, setTitle] = useState("Monsters Rolodex");
+
   useEffect(() => {
     console.log("userEffect callback 执行", "--line67");
     fetch("http://jsonplaceholder.typicode.com/users")
@@ -82,9 +84,23 @@ function App() {
     setFilteredMonsters(filterRes);
     // this.setState({ filteredMonsters: filterRes });
   };
+
+  const handleTitleChange = (event) => {
+    // const monsters = this.state.monsters;
+    let value = event.target.value.toLocaleLowerCase();
+    setTitle(value);
+    // this.setState({ filteredMonsters: filterRes });
+  };
+
   return (
     <div className='App'>
-      <h1 className='app-title'>Monsters Rolodex</h1>
+      <h1 className='app-title'>{title}</h1>
+      <SearchBox
+        handleChange={handleTitleChange}
+        placeholder='input title here'
+        className='monster-search-box'
+      />
+      <br />
       <SearchBox
         handleChange={handleChange}
         placeholder='search monster'
