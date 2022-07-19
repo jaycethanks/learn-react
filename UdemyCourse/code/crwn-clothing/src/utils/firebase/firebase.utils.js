@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider, // 如果要使用其他的平台登录，还可以使用facebook等，这时需要引入对应的provider
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 
 import {
@@ -72,5 +73,11 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
   const response = await createUserWithEmailAndPassword(auth, email, password);
+  return response;
+};
+
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  const response = await signInWithEmailAndPassword(auth, email, password);
   return response;
 };
