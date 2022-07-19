@@ -3,7 +3,8 @@ import {
   getAuth,
   signInWithRedirect,
   signInWithPopup,
-  GoogleAuthProvider,
+  GoogleAuthProvider, // 如果要使用其他的平台登录，还可以使用facebook等，这时需要引入对应的provider
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 import {
@@ -34,6 +35,8 @@ googleAuthProvider.setCustomParameters({
 export const auth = getAuth();
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleAuthProvider);
+export const signInWithGoogleRedirect = () =>
+  signInWithRedirect(auth, googleAuthProvider);
 
 // 实例化 FireStore,
 export const db = getFirestore();
@@ -44,7 +47,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
    * 1. if user data exist, return userDocRef
    * 2. if user data does not exist,  set the document with the data from userAuth im my collection
    */
-
+  if (userAuth) return;
   const userDocRef = doc(db, "user", userAuth.uid);
   const userSnapshot = await getDoc(userDocRef);
   // 2
@@ -64,4 +67,10 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 
   // 1
   return userDocRef;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  const response = await createUserWithEmailAndPassword(auth, email, password);
+  return response;
 };
